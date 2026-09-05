@@ -1,0 +1,66 @@
+# Maven build output
+/target/
+*.class
+
+# Logs and JVM crash files
+*.log
+logs/
+hs_err_pid*
+replay_pid*
+
+# Vaadin / Node generated content
+node_modules/
+src/main/frontend/generated/
+vite.generated.ts
+pnpmfile.js
+.npmrc
+
+# Generated Vaadin files unless you customize them
+tsconfig.json
+types.d.ts
+src/main/frontend/index.html
+
+# Visual Studio Code
+.vscode/
+
+# IntelliJ IDEA
+.idea/
+*.iml
+*.iws
+*.ipr
+out/
+
+# Eclipse / Spring Tool Suite
+.classpath
+.project
+.settings/
+.factorypath
+.apt_generated/
+.springBeans
+.sts4-cache/
+
+# Local environment variables and secrets
+.env
+.env.*
+!.env.example
+
+# Local-only Spring configurations
+src/main/resources/application-local.yml
+src/main/resources/application-secrets.yml
+
+# Certificates and private keys
+*.jks
+*.p12
+*.pfx
+*.pem
+*.key
+
+# Local database files
+*.db
+*.sqlite
+*.sqlite3
+
+# Operating-system files
+.DS_Store
+Thumbs.db
+Desktop.ini
