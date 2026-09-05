@@ -42,3 +42,22 @@ Start PostgreSQL:
 
 ```shell
 docker compose up -d
+```
+
+Start the application:
+
+```shell
+mvn clean spring-boot:run
+```
+
+Then open:
+
+http://localhost:8080
+
+The upcoming-session REST endpoint is available at:
+
+http://localhost:8080/api/v1/sessions/upcoming
+
+## Project status
+
+This project is in early development and currently uses a demonstration calendar provider.
