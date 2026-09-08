@@ -46,7 +46,22 @@ class GtwcEventParserTest {
                 .hasToString("2026-09-20");
 
         assertThat(event.sessions())
-                .hasSize(6);
+                .hasSize(7);
+
+        assertThat(event.sessions())
+                .anySatisfy(session -> {
+                    assertThat(session.name())
+                            .isEqualTo(
+                                    "Official Paid Test Session 1"
+                            );
+
+                    assertThat(session.startsAt())
+                            .isEqualTo(
+                                    Instant.parse(
+                                            "2026-09-17T12:00:00Z"
+                                    )
+                            );
+                });
 
         ImportedRound round = mapper.map(event, 2026);
 

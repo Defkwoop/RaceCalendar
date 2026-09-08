@@ -1,11 +1,5 @@
 package com.teo.racecalendar.importers.gtwc;
 
-import org.jsoup.Jsoup;
-import org.jsoup.nodes.Document;
-import org.jsoup.nodes.Element;
-import org.jsoup.select.Elements;
-import org.springframework.stereotype.Component;
-
 import java.time.Instant;
 import java.time.LocalDate;
 import java.time.LocalTime;
@@ -20,6 +14,12 @@ import java.util.Locale;
 import java.util.Map;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
+
+import org.jsoup.Jsoup;
+import org.jsoup.nodes.Document;
+import org.jsoup.nodes.Element;
+import org.jsoup.select.Elements;
+import org.springframework.stereotype.Component;
 
 @Component
 public class GtwcEventParser {
@@ -222,27 +222,52 @@ public class GtwcEventParser {
             LocalDate eventStart,
             LocalDate eventEnd
     ) {
-        var parsedDay = java.time.MonthDay.parse(
-                caption,
-                TABLE_DAY_FORMAT
-        );
+        java.time.MonthDay parsedDay;
 
-        for (int year = eventStart.getYear();
-                year <= eventEnd.getYear();
+        try {
+            parsedDay = java.time.MonthDay.parse(
+                    caption,
+                    TABLE_DAY_FORMAT
+            );
+        } catch (DateTimeParseException exception) {
+            throw new GtwcImportException(
+                    "Unsupported GTWC timetable date: "
+                    + caption,
+                    exception
+            );
+        }
+
+        /*
+     * GTWC may advertise a Friday-Sunday race weekend
+     * while official tests begin on Thursday.
+     *
+     * Allow timetable sessions up to seven days before
+     * the advertised start and one day after its end.
+         */
+        LocalDate permittedStart
+                = eventStart.minusDays(7);
+
+        LocalDate permittedEnd
+                = eventEnd.plusDays(1);
+
+        for (int year = permittedStart.getYear();
+                year <= permittedEnd.getYear();
                 year++) {
 
             LocalDate candidate = parsedDay.atYear(year);
 
-            if (!candidate.isBefore(eventStart)
-                    && !candidate.isAfter(eventEnd)) {
+            if (!candidate.isBefore(permittedStart)
+                    && !candidate.isAfter(permittedEnd)) {
                 return candidate;
             }
         }
 
         throw new GtwcImportException(
                 "Timetable date '" + caption
-                + "' falls outside event range "
-                + eventStart + " to " + eventEnd
+                + "' is outside the permitted range "
+                + permittedStart
+                + " to "
+                + permittedEnd
         );
     }
 

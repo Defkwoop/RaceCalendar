@@ -1,5 +1,16 @@
 package com.teo.racecalendar.ui;
 
+import java.time.Duration;
+import java.time.Instant;
+import java.time.LocalDate;
+import java.time.ZoneId;
+import java.time.format.DateTimeFormatter;
+import java.util.List;
+import java.util.Map;
+import java.util.TreeMap;
+
+import org.springframework.beans.factory.annotation.Value;
+
 import com.teo.racecalendar.service.WeekendCalendarDto;
 import com.teo.racecalendar.service.WeekendCalendarService;
 import com.teo.racecalendar.service.WeekendSessionDto;
@@ -12,21 +23,12 @@ import com.vaadin.flow.component.html.H1;
 import com.vaadin.flow.component.html.H4;
 import com.vaadin.flow.component.html.Paragraph;
 import com.vaadin.flow.component.html.Span;
+import com.vaadin.flow.component.orderedlayout.FlexComponent;
 import com.vaadin.flow.component.orderedlayout.HorizontalLayout;
 import com.vaadin.flow.component.orderedlayout.VerticalLayout;
 import com.vaadin.flow.data.renderer.ComponentRenderer;
 import com.vaadin.flow.router.PageTitle;
 import com.vaadin.flow.router.Route;
-import org.springframework.beans.factory.annotation.Value;
-
-import java.time.Duration;
-import java.time.Instant;
-import java.time.LocalDate;
-import java.time.ZoneId;
-import java.time.format.DateTimeFormatter;
-import java.util.List;
-import java.util.Map;
-import java.util.TreeMap;
 
 @Route("")
 @PageTitle("Race Calendar")
@@ -225,6 +227,9 @@ public class DashboardView extends VerticalLayout {
                 = weekend.sessions()
                         .stream()
                         .filter(WeekendSessionDto::isRace)
+                        .filter(session
+                                -> session.startsAt() != null
+                        )
                         .sorted((first, second)
                                 -> first.startsAt().compareTo(
                                 second.startsAt()
@@ -274,6 +279,7 @@ public class DashboardView extends VerticalLayout {
                 .stream()
                 .filter(WeekendSessionDto::isRace)
                 .map(WeekendSessionDto::startsAt)
+                .filter(java.util.Objects::nonNull)
                 .filter(start -> start.isAfter(now))
                 .sorted()
                 .findFirst()
@@ -408,6 +414,9 @@ public class DashboardView extends VerticalLayout {
         for (WeekendSessionDto session
                 : weekend.sessions()
                         .stream()
+                        .filter(item
+                                -> item.startsAt() != null
+                        )
                         .sorted((first, second)
                                 -> first.startsAt().compareTo(
                                 second.startsAt()
@@ -434,7 +443,9 @@ public class DashboardView extends VerticalLayout {
         HorizontalLayout row = new HorizontalLayout();
 
         row.setWidthFull();
-        row.setAlignItems(Alignment.CENTER);
+        row.setAlignItems(
+                FlexComponent.Alignment.CENTER
+        );
         row.setSpacing(true);
 
         Span time = new Span(
@@ -514,7 +525,6 @@ public class DashboardView extends VerticalLayout {
                 new Text("Source: "),
                 officialLink
         );
-
         return linkContainer;
     }
 }

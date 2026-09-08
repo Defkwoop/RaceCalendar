@@ -35,4 +35,8 @@ public interface RaceSessionRepository
             Instant now,
             Pageable pageable
     );
+
+    List<RaceSession> findByRoundInOrderByStartsAtAsc(
+            List<ChampionshipRound> rounds
+    );
 }
