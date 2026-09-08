@@ -58,10 +58,12 @@ public class GtwcEuropeProvider
                 = calendarParser.parseEventLinks(seasonHtml);
 
         if (eventLinks.isEmpty()) {
-            throw new GtwcImportException(
-                    "GTWC calendar contained no events for "
-                    + season
+            log.info(
+                    "GTWC calendar currently contains no events for season={}",
+                    season
             );
+
+            return List.of();
         }
 
         List<ImportedRound> rounds = new ArrayList<>();

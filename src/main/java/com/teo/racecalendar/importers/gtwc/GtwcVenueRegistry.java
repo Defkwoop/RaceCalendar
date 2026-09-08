@@ -60,11 +60,6 @@ public class GtwcVenueRegistry {
                     "portimao",
                     "Algarve International Circuit",
                     "PT",
-                    "Europe/Lisbon"),
-            entry("Portimão",
-                    "portimao",
-                    "Algarve International Circuit",
-                    "PT",
                     "Europe/Lisbon")
     );
 

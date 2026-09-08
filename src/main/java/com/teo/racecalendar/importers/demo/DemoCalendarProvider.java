@@ -16,7 +16,6 @@ import com.teo.racecalendar.importers.CalendarProvider;
 import com.teo.racecalendar.importers.ImportedRound;
 import com.teo.racecalendar.importers.ImportedSession;
 import com.teo.racecalendar.importers.ImportedVenue;
-import org.springframework.context.annotation.Profile;
 
 @Component
 @Profile("demo")
