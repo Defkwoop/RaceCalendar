@@ -11,21 +11,19 @@ import com.teo.racecalendar.service.UpcomingSessionDto;
 import com.teo.racecalendar.service.UpcomingSessionService;
 
 @RestController
-@RequestMapping("/api/v1/sessions")
-public class CalendarController {
+@RequestMapping("/api/v1/weekends")
+public class WeekendCalendarController {
 
-    private final UpcomingSessionService sessionService;
+    private final WeekendCalendarService weekendService;
 
-    public CalendarController(
-            UpcomingSessionService sessionService
+    public WeekendCalendarController(
+            WeekendCalendarService weekendService
     ) {
-        this.sessionService = sessionService;
+        this.weekendService = weekendService;
     }
 
     @GetMapping("/upcoming")
-    public List<UpcomingSessionDto> upcoming(
-            @RequestParam(defaultValue = "25") int limit
-    ) {
-        return sessionService.findUpcoming(limit);
+    public List<WeekendCalendarDto> upcoming() {
+        return weekendService.findUpcomingWeekends();
     }
 }
