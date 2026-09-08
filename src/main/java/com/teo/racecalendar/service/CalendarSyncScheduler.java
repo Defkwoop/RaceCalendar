@@ -13,6 +13,7 @@ import org.springframework.scheduling.annotation.Scheduled;
 import org.springframework.stereotype.Component;
 
 import com.teo.racecalendar.importers.CalendarProvider;
+import com.teo.racecalendar.importers.ImportedRound;
 
 @Component
 public class CalendarSyncScheduler {
@@ -67,7 +68,9 @@ public class CalendarSyncScheduler {
                     season
             );
 
-            importService.importSeason(provider, season);
+            List<ImportedRound> rounds = provider.fetchSeason(season);
+            importService.importRounds(rounds);
+
         } catch (Exception exception) {
             log.error(
                     "Calendar synchronization failed for provider={} season={}",

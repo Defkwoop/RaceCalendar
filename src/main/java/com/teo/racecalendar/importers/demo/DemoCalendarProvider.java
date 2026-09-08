@@ -1,9 +1,10 @@
-package com.teo.racecalendar.importers;
+package com.teo.racecalendar.importers.demo;
 
 import java.time.Instant;
 import java.time.LocalDate;
 import java.util.List;
 
+import org.springframework.context.annotation.Profile;
 import org.springframework.stereotype.Component;
 
 import com.teo.racecalendar.domain.enums.MeetingFormat;
@@ -11,8 +12,13 @@ import com.teo.racecalendar.domain.enums.RacingCategory;
 import com.teo.racecalendar.domain.enums.ScheduleStatus;
 import com.teo.racecalendar.domain.enums.SeriesCode;
 import com.teo.racecalendar.domain.enums.SessionType;
+import com.teo.racecalendar.importers.CalendarProvider;
+import com.teo.racecalendar.importers.ImportedRound;
+import com.teo.racecalendar.importers.ImportedSession;
+import com.teo.racecalendar.importers.ImportedVenue;
 
 @Component
+@Profile("demo")
 public class DemoCalendarProvider implements CalendarProvider {
 
     @Override

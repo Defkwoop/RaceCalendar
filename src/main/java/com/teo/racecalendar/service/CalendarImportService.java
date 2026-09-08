@@ -1,5 +1,6 @@
 package com.teo.racecalendar.service;
 
+import java.util.List;
 import java.util.Locale;
 
 import org.springframework.stereotype.Service;
@@ -10,7 +11,6 @@ import com.teo.racecalendar.domain.ChampionshipRound;
 import com.teo.racecalendar.domain.Meeting;
 import com.teo.racecalendar.domain.RaceSession;
 import com.teo.racecalendar.domain.Venue;
-import com.teo.racecalendar.importers.CalendarProvider;
 import com.teo.racecalendar.importers.ImportedRound;
 import com.teo.racecalendar.importers.ImportedSession;
 import com.teo.racecalendar.importers.ImportedVenue;
@@ -44,11 +44,8 @@ public class CalendarImportService {
     }
 
     @Transactional
-    public void importSeason(
-            CalendarProvider provider,
-            int season
-    ) {
-        for (ImportedRound importedRound : provider.fetchSeason(season)) {
+    public void importRounds(List<ImportedRound> rounds) {
+        for (ImportedRound importedRound : rounds) {
             importRound(importedRound);
         }
     }
