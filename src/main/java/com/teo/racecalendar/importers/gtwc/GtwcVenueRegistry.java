@@ -1,11 +1,12 @@
 package com.teo.racecalendar.importers.gtwc;
 
-import com.teo.racecalendar.importers.ImportedVenue;
-import org.springframework.stereotype.Component;
-
 import java.text.Normalizer;
 import java.util.Locale;
 import java.util.Map;
+
+import org.springframework.stereotype.Component;
+
+import com.teo.racecalendar.importers.ImportedVenue;
 
 @Component
 public class GtwcVenueRegistry {
@@ -26,6 +27,16 @@ public class GtwcVenueRegistry {
                     "Monza",
                     "IT",
                     "Europe/Rome"),
+            entry("Imola",
+                    "imola",
+                    "Autodromo Internazionale Enzo e Dino Ferrari",
+                    "IT",
+                    "Europe/Rome"),
+            entry("Budapest",
+                    "hungaroring",
+                    "Hungaroring",
+                    "HU",
+                    "Europe/Budapest"),
             entry("CrowdStrike 24 Hours of Spa",
                     "spa-francorchamps",
                     "Circuit de Spa-Francorchamps",
